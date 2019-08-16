@@ -1,0 +1,64 @@
+Step: step-credential-initializer-wczwh:
+
+{"level":"warn","ts":1565979196.6883817,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/master\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1565979196.6886501,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: step-working-dir-initializer-8vgjf:
+
+{"level":"warn","ts":1565979199.8748622,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1565979199.8758252,"logger":"fallback-logger","caller":"bash/main.go:65","msg":"Successfully executed command \"mkdir -p /workspace/source\""}
+Step: step-place-tools:
+
+Step: step-git-source-meta-********-springsvc-master-rwgt5:
+
+{"level":"warn","ts":1565979216.1643174,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/master\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1565979216.678551,"logger":"fallback-logger","caller":"git/git.go:102","msg":"Successfully cloned https://github.com/********/springsvc.git @ 8553ee46bc914baa08c069fab00df80c3ce2ac2a in path /workspace/source"}
+Step: step-git-merge:
+
+{"level":"info","msg":"Using SHAs from PULL_REFS=master:8553ee46bc914baa08c069fab00df80c3ce2ac2a","time":"2019-08-16T18:13:37Z"}
+{"level":"warning","msg":"no SHAs to merge, falling back to initial cloned commit","time":"2019-08-16T18:13:37Z"}
+Step: step-merge-pull-refs:
+
+SKIP merge-pull-refs: Nothing to merge
+Step: step-create-effective-pipeline:
+
+{"level":"info","msg":"Deleting and cloning the Jenkins X versions repo","time":"2019-08-16T18:13:38Z"}
+{"level":"info","msg":"Cloning the Jenkins X versions repo https://github.com/jenkins-x/jenkins-x-versions.git with ref refs/heads/master to /builder/home/.**/jenkins-x-versions","time":"2019-08-16T18:13:38Z"}
+{"level":"info","msg":"Effective pipeline written to jenkins-x-effective.yml","time":"2019-08-16T18:13:40Z"}
+Step: step-create-tekton-crds:
+
+{"level":"info","msg":"running command: echo \\$(**-release-version) \u003e VERSION","time":"2019-08-16T18:13:41Z"}
+{"level":"info","msg":"","time":"2019-08-16T18:13:41Z"}
+{"level":"info","msg":"running command: mvn versions:set -DnewVersion=\\$(cat VERSION)","time":"2019-08-16T18:13:41Z"}
+Picked up _JAVA_OPTIONS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Xms10m -Xmx192m
+OpenJDK 64-Bit Server VM warning: If the number of processors is expected to increase from one, then you should configure the number of parallel GC threads appropriately using -XX:ParallelGCThreads=N
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< pvi.spring:reactiveservice >---------------------
+[INFO] Building reactiveservice 0.1.0
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- versions-maven-plugin:2.7:set (default-cli) @ reactiveservice ---
+[INFO] Searching for local aggregator root...
+[INFO] Local aggregation root: /workspace/source
+[INFO] Processing change of pvi.spring:reactiveservice:0.1.0 -> 0.1.0
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  39.196 s
+[INFO] Finished at: 2019-08-16T18:14:22Z
+[INFO] ------------------------------------------------------------------------
+{"level":"info","msg":"","time":"2019-08-16T18:14:22Z"}
+{"level":"info","msg":"running command: ** step tag --version \\$(cat VERSION)","time":"2019-08-16T18:14:22Z"}
+{"level":"info","msg":"Updating chart version in charts/springsvc/Chart.yaml to 0.1.0","time":"2019-08-16T18:14:22Z"}
+{"level":"info","msg":"Updating repository in charts/springsvc/values.yaml to 10.102.188.157:5000/********/springsvc","time":"2019-08-16T18:14:22Z"}
+{"level":"info","msg":"Updating tag in charts/springsvc/values.yaml to 0.1.0","time":"2019-08-16T18:14:22Z"}
+{"level":"info","msg":"Tag v0.1.0 created and pushed to remote origin","time":"2019-08-16T18:14:27Z"}
+{"level":"info","msg":"","time":"2019-08-16T18:14:27Z"}
+{"level":"warning","msg":"failed to find secret kaniko-secret in namespace **: secrets \"kaniko-secret\" not found","time":"2019-08-16T18:14:27Z"}
+{"level":"info","msg":"PipelineActivity for ********-springsvc-master-1","time":"2019-08-16T18:14:27Z"}
+{"level":"info","msg":"Applying changes ","time":"2019-08-16T18:14:27Z"}
+{"level":"info","msg":"upserted PipelineResource ********-springsvc-master for the git repository https://github.com/********/springsvc.git and branch master","time":"2019-08-16T18:14:27Z"}
+{"level":"info","msg":"upserted Task ********-springsvc-master-from-build-pack-1","time":"2019-08-16T18:14:27Z"}
+{"level":"info","msg":"upserted Pipeline ********-springsvc-master-1","time":"2019-08-16T18:14:27Z"}
+{"level":"info","msg":"created PipelineRun ********-springsvc-master-1","time":"2019-08-16T18:14:27Z"}
+{"level":"info","msg":"created PipelineStructure ********-springsvc-master-1","time":"2019-08-16T18:14:27Z"}
