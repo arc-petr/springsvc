@@ -1,0 +1,10 @@
+s
+[INFO] Finished at: 2019-08-14T19:17:27-07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal com.google.cloud.tools:jib-maven-plugin:1.3.0:build (default) on project reactiveservice: Build image failed, perhaps you should make sure your credentials for 'gcr.io' are set up correctly. See https://github.com/GoogleContainerTools/jib/blob/master/docs/faq.md#what-should-i-do-when-the-registry-responds-with-unauthorized for help: Unauthorized for gcr.io/tf-ops-dane/java: 401 Unauthorized
+[ERROR] {"errors":[{"code":"UNAUTHORIZED","message":
+"You don't have the needed permissions to perform this operation, and you may have invalid credentials. 
+To authenticate your request, follow the steps in: https://cloud.google.com/container-registry/docs/advanced-authentication"}]}
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack 
