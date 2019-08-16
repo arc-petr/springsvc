@@ -15,6 +15,25 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
+	<properties>
+		<jib-maven-plugin.version>1.4.0</jib-maven-plugin.version>
+		<gcp-project-id>fresh-catwalk-240714</gcp-project-id>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<http-port>8080</http-port>
+		<thrift-port>8081</thrift-port>
+		<from-image>gcr.io/distroless/java</from-image>
+		<from-image-tag>8</from-image-tag>
+		<java.version>1.8</java.version>
+		<debianMainClass>pvi.samplespring.Application</debianMainClass>
+		<debianJavaOpts>-XX:+ExitOnOutOfMemoryError
+			-XX:-OmitStackTraceInFastThrow
+		</debianJavaOpts>
+		  <timestamp>${maven.build.timestamp}</timestamp>
+
+   		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+		
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -37,17 +56,108 @@
 		</dependency>
 	</dependencies>
 
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
-
+	<distributionManagement>
+		<repository>
+			<id>libs-release</id>
+			<name>libs-release</name>
+			<url>file:///Users/pigrevskiy/repo/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>libs-snapshot</id>
+			<name>libs-snapshot</name>
+			<url>file:///Users/pigrevskiy/repo/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.google.cloud.tools</groupId>
+					<artifactId>jib-maven-plugin</artifactId>
+					<version>${jib-maven-plugin.version}</version>
+					<executions>
+						<execution>
+							<phase>deploy</phase>
+							<goals>
+								<goal>build</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<from>
+							<image>${from-image}:${from-image-tag}</image>
+						</from>
+						<to>
+							<image>gcr.io/${gcp-project-id}/${project.name}:${project.version}-${timestamp}</image>
+							<credHelper>gcloud</credHelper>
+						</to>
+						<extraDirectories>
+							<paths>${project.basedir}/jib</paths>
+							<permissions>
+								<permission>
+									<file>/entrypoint.sh</file>
+									<mode>755</mode>
+								</permission>
+							</permissions>
+						</extraDirectories>
+						<container>
+							<entrypoint>
+								<shell>sh</shell>
+								<option>-c</option>
+								<arg>/entrypoint.sh</arg>
+							</entrypoint>
+							<ports>
+								<port>8081</port>
+								<port>8080</port>
+							</ports>
+							<environment>
+								<SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
+								<MAIN_CLASS>${debianMainClass}</MAIN_CLASS>
+								<DEBIAN_JAVA_OPTS>${debianJavaOpts}</DEBIAN_JAVA_OPTS>
+							</environment>
+							<useCurrentTimestamp>true</useCurrentTimestamp>
+							<!-- <user>rdapps:rdapps</user> -->
+						</container>
+					</configuration>
+				</plugin>
+
+
+
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+					<executions>
+						<execution>
+							<id>copy-resources</id>
+							<!-- here the phase you need -->
+							<phase>compile</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.basedir}/jib</outputDirectory>
+								<resources>
+									<resource>
+										<directory>${project.basedir}/../jib</directory>
+										<filtering>true</filtering>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
