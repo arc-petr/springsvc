@@ -4,7 +4,7 @@ build:
   artifacts:
   - image: fresh-catwalk-240714/springsvc
     context: .
-    docker: {}
+    jibMaven: {}
   tagPolicy:
     envTemplate:
       template: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}:{{.VERSION}}'
