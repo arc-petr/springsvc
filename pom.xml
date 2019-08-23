@@ -74,12 +74,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- 
+			 
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
 			</plugin>
-		 -->
+		 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
@@ -92,7 +92,7 @@
     </plugins>
 		<pluginManagement>
 			<plugins>
-<!--  				<plugin>
+  				<plugin>
 					<groupId>com.google.cloud.tools</groupId>
 					<artifactId>jib-maven-plugin</artifactId>
 					<version>${jib-maven-plugin.version}</version>
@@ -137,11 +137,10 @@
 								<DEBIAN_JAVA_OPTS>${debianJavaOpts}</DEBIAN_JAVA_OPTS>
 							</environment>
 							<useCurrentTimestamp>true</useCurrentTimestamp>
-							< ! - - <user>rdapps:rdapps</user> - - >
+							<!-- <user>rdapps:rdapps</user> -->
 						</container>
 					</configuration>
 				</plugin>
--->
 
 
 				<plugin>
