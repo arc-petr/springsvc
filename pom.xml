@@ -109,7 +109,7 @@
 							<image>${from-image}:${from-image-tag}</image>
 						</from>
 						<to>
-							<image>gcr.io/${gcp-project-id}/${project.name}:${project.version}-${timestamp}</image>
+							<image>${env.DOCKER_REGISTRY}/${gcp-project-id}/${project.name}:${project.version}-${timestamp}</image>
 							<credHelper>gcloud</credHelper>
 						</to>
 						<extraDirectories>
