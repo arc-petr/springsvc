@@ -139,6 +139,7 @@
 							<useCurrentTimestamp>true</useCurrentTimestamp>
 							<!-- <user>rdapps:rdapps</user> -->
 						</container>
+						<allowInsecureRegistries>true</allowInsecureRegistries>
 					</configuration>
 				</plugin>
 
