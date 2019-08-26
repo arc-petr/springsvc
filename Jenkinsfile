@@ -6,7 +6,7 @@ pipeline {
     ORG = 'arc-petr'
     APP_NAME = 'springsvc'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
-    DOCKER_REGISTRY_ORG = 'fresh-catwalk-240714'
+    DOCKER_REGISTRY_ORG = 'arc-petr'
   }
   stages {
     stage('CI Build and push snapshot') {
