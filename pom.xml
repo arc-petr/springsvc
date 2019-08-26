@@ -122,11 +122,11 @@
 							</permissions>
 						</extraDirectories>
 						<container>
-							<entrypoint>
+<!-- 							<entrypoint>
 								<shell>sh</shell>
 								<option>-c</option>
 								<arg>/entrypoint.sh</arg>
-							</entrypoint>
+							</entrypoint> -->
 							<ports>
 								<port>8081</port>
 								<port>8080</port>
