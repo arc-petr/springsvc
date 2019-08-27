@@ -38,7 +38,7 @@ pipeline {
       }
       steps {
         container('maven') {
-          sh "mvn clean install sonar:sonar -Dsonar.host.url=http://sonarqube.jx.35.230.76.49.nip.io -Dsonar.projectVersion=\$(jx-release-version) -Dsonar.projectKey=AUTO_VALIDATION_$APP_NAME -Dsonar.tests=src/test "
+          sh "mvn clean install sonar:sonar -Dsonar.host.url=http://sonarqube.jx.35.230.76.49.nip.io -Dsonar.projectVersion=\$(jx-release-version) -Dsonar.projectKey=AUTO_VALIDATION_$APP_NAME -Dsonar.projectName=AUTO_VALIDATION_$APP_NAME -Dsonar.tests=src/test "
 		}
 	  }
     }
