@@ -38,7 +38,7 @@ pipeline {
       }
       steps {
         container('maven') {
-          sh "mvn install sonar:sonar -Dsonar.host.url=sonarqube.jx.35.230.76.49.nip.io  -Dsonar.tests=src/test"
+          sh "mvn clean install sonar:sonar -Dsonar.host.url=http://sonarqube.jx.35.230.76.49.nip.io  -Dsonar.tests=src/test"
 		}
 	  }
     }
