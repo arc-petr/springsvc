@@ -2,7 +2,7 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  - image: fresh-catwalk-240714/springsvc
+  - image: arc-petr/springsvc
     context: .
     jibMaven: {}
   tagPolicy:
