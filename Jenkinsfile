@@ -3,10 +3,10 @@ pipeline {
     label "jenkins-maven"
   }
   environment {
-    ORG = 'arc-petr'
-    APP_NAME = 'springsvc'
+    ORG = 'REPLACE_ME_ORG'
+    APP_NAME = 'REPLACE_ME_APP_NAME'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
-    DOCKER_REGISTRY_ORG = 'arc-petr'
+    DOCKER_REGISTRY_ORG = 'REPLACE_ME_DOCKER_REGISTRY_ORG'
   }
   stages {
     stage('CI Build and push snapshot') {
@@ -21,7 +21,7 @@ pipeline {
       steps {
         container('maven') {
           sh "mvn versions:set -DnewVersion=$PREVIEW_VERSION"
-          sh "mvn install"
+          sh "mvn clean install -DskipTests=true"
           sh "skaffold version"
           sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
@@ -32,17 +32,6 @@ pipeline {
         }
       }
     }
-    stage('Sonar validation'){
-      when {
-        branch 'master'
-      }
-      steps {
-        container('maven') {
-          sh "mvn clean install sonar:sonar -Dsonar.host.url=http://sonarqube.jx.35.230.76.49.nip.io -Dsonar.projectVersion=\$(jx-release-version) -Dsonar.projectKey=AUTO_VALIDATION_$APP_NAME -Dsonar.projectName=AUTO_VALIDATION_$APP_NAME -Dsonar.tests=src/test "
-		}
-	  }
-    }
-    
     stage('Build Release') {
       when {
         branch 'master'
@@ -59,8 +48,7 @@ pipeline {
           sh "echo \$(jx-release-version) > VERSION"
           sh "mvn versions:set -DnewVersion=\$(cat VERSION)"
           sh "jx step tag --version \$(cat VERSION)"
-          
-          sh "mvn clean deploy -U -DdebianDistribution=dev -Dbuild.number=${BUILD_NUMBER} -fae"
+          sh "mvn clean deploy"
           sh "skaffold version"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
@@ -73,7 +61,7 @@ pipeline {
       }
       steps {
         container('maven') {
-          dir('charts/springsvc') {
+          dir('charts/REPLACE_ME_APP_NAME') {
             sh "jx step changelog --version v\$(cat ../../VERSION)"
 
             // release the helm chart

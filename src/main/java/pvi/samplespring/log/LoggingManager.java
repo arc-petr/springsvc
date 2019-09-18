@@ -14,13 +14,14 @@ public class LoggingManager {
 	private Logger libraryLogger = LogManager.getLogger(LoggingManager.class);
 
 	@Around("execution(* pvi.samplespring.*.*(..))")
-	public void coverMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+	public Object coverMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		String longName = proceedingJoinPoint.getSignature().toLongString();
 
 		libraryLogger.info(String.format("Method started: %s  ", longName));
+		Object result;
 		try {
 
-			Object result = proceedingJoinPoint.proceed();
+			result = proceedingJoinPoint.proceed();
 			libraryLogger.info(String.format("Method %s returned %s  ", longName, result));
 		} catch (Throwable t) {
 			libraryLogger.info(String.format("Method %s throwed %s ", longName, t.getLocalizedMessage()));
@@ -28,9 +29,7 @@ public class LoggingManager {
 		} finally {
 			libraryLogger.info(String.format("Method %s finished", longName));
 		}
-
+		return result;
 	}
-	
-	
-	
+
 }
