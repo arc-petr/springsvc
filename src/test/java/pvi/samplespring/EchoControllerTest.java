@@ -25,7 +25,7 @@ public class EchoControllerTest {
 
 	@Test
 	public void testEcho() throws Exception {
-		mockMvc.perform(get("/echor/1234567").accept(MediaType.TEXT_PLAIN)).andDo(print()).andExpect(status().isOk())
+		mockMvc.perform(get("/echor/1234567").contentType(MediaType.TEXT_PLAIN).accept(MediaType.TEXT_PLAIN)).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string("ECHO: 1234567"));
 
 	}
