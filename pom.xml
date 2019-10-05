@@ -6,7 +6,7 @@
 
 	<groupId>pvi.spring</groupId>
 	<artifactId>springsvc</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<description>Services for test</description>
 
@@ -14,7 +14,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.8.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath>..</relativePath> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -125,6 +125,7 @@
 							<image>${env.DOCKER_REGISTRY}/${gcp-project-id}/${project.name}:${project.version}</image>
 							<credHelper>gcloud</credHelper>
 						</to>
+
 						<extraDirectories>
 							<paths>${project.basedir}/jib</paths>
 							<permissions>

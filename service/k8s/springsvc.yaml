@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rest-service
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: rest-service.sbadmin.192.168.64.31.nip.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: rest-service
+              servicePort: 8085
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-service
+spec:
+  ports:
+    - port: 8085
+      name: http
+  type: LoadBalancer
+  selector:
+    app: rest-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-service
+spec:
+  selector:
+    matchLabels:
+      app: rest-service
+  template:
+    metadata:
+      labels:
+        app: rest-service
+    spec:
+      containers:
+        - name: rest-service
+          image: gcr.io/fresh-catwalk-240714/rest-service:0.1.3-SNAPSHOT
+          ports:
+            - containerPort: 8085
+          env:
+            - name: SPRING_BOOT_URL
+              value: ""
+            - name: KUBERNETES_DISCOVERY
+              value: "true"
+            - name: SPRING_BOOT_ADMIN_CLIENT
+              value: "false"
