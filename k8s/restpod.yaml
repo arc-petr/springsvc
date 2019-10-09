@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rest-service
+spec:
+  containers:
+    - name: rest-service
+      image: gcr.io/fresh-catwalk-240714/rest-service
+      ports:
+        - containerPort: 8085
+      env:
+        - name: SPRING_BOOT_URL
+          value: ""
+        - name: KUBERNETES_DISCOVERY
+          value: "true"
+        - name: SPRING_BOOT_ADMIN_CLIENT
+          value: "false"

@@ -14,5 +14,15 @@ public class EchoController {
 		
 		return String.format("ECHO: %s", msg);
 	}
+	@GetMapping(path = "/echorever2/{msg}", produces = { MediaType.TEXT_PLAIN_VALUE })
+	@ResponseBody
+	public String getMessageReverse(@PathVariable String msg) {
+		return new StringBuilder().append(msg).reverse().toString();
+	}
 
+	@GetMapping(path = "/echorever/{msg}", produces = { MediaType.TEXT_PLAIN_VALUE })
+	@ResponseBody
+	public String getMessageReverse2(@PathVariable String msg) {
+		return new StringBuilder().append(msg).reverse().toString();
+	}
 }

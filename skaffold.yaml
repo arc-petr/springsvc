@@ -1,28 +1,71 @@
-apiVersion: skaffold/v1beta2
+apiVersion: skaffold/v1beta15
 kind: Config
 build:
   artifacts:
-  - image: gcr.io/fresh-catwalk-240714/springsvc
-    context: .
-    jibMaven: {}
+  - image: gcr.io/fresh-catwalk-240714/rest-service
+    jib:
+      project: service
+      args:
+      - '-DskipTests=true'
+  - image: gcr.io/fresh-catwalk-240714/reactive-service
+    jib:
+      project: reactiveservice
+      args:
+      - '-DskipTests=true'
   tagPolicy:
     envTemplate:
       template: 'gcr.io/{{.IMAGE_NAME}}:{{.VERSION}}'
-  local: {}
 deploy:
-  kubectl: {}
+  kubectl:
+    manifests:
+      - k8s/springsvc.yaml
+# optional profile to run the jib build on Google Cloud Build
 profiles:
-- name: dev
-  build:
-    tagPolicy:
-      envTemplate:
-        template: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}:{{.DIGEST_HEX}}'
-    local: {}
-  deploy:
-    helm:
-      releases:
-      - name: springsvc
-        chartPath: charts/springsvc
-        setValueTemplates:
-          image.repository: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}'
-          image.tag: '{{.DIGEST_HEX}}'
+  -
+  - name: debug-rest-pod
+    build:
+      artifacts:
+        - image: gcr.io/fresh-catwalk-240714/rest-service
+          jib:
+            project: service
+            args:
+              - '-DskipTests=true'
+      tagPolicy:
+        sha256: {}
+      local:
+        push: false
+    deploy:
+      kubectl:
+        manifests:
+        - k8s/restpod.yaml
+    portForward:
+    - resourceType: Pod
+      resourceName: rest-service
+      namespace: default
+      port: 5005
+      localPort: 5005
+  - name: debug-rest-deployment
+    build:
+      artifacts:
+        - image: gcr.io/fresh-catwalk-240714/rest-service
+          jib:
+            project: service
+            args:
+              - '-DskipTests=true'
+      tagPolicy:
+        sha256: {}
+      local:
+        push: false
+    deploy:
+      kubectl:
+        manifests:
+          - k8s/restdeploy.yaml
+  - name: dev
+    build:
+      tagPolicy:
+        envTemplate:
+          template: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}:{{.DIGEST_HEX}}'
+
+  - name: gcb
+    build:
+      googleCloudBuild: {}

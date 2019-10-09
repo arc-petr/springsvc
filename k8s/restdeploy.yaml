@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-service
+spec:
+  selector:
+    matchLabels:
+      app: rest-service
+  template:
+    metadata:
+      labels:
+        app: rest-service
+    spec:
+      containers:
+        - name: rest-service
+          image: gcr.io/fresh-catwalk-240714/rest-service
+          ports:
+            - containerPort: 8085
+          env:
+            - name: SPRING_BOOT_URL
+              value: ""
+            - name: KUBERNETES_DISCOVERY
+              value: "true"
+            - name: SPRING_BOOT_ADMIN_CLIENT
+              value: "false"

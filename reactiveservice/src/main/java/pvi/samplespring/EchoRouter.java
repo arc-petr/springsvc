@@ -23,4 +23,19 @@ public class EchoRouter {
 				req -> ok().contentType(MediaType.TEXT_PLAIN)
 						.body(BodyInserters.fromObject(echoHandler.echo(req.pathVariable("msg")))));
 	}
+	@Bean
+	public RouterFunction<ServerResponse> echoRevert() {
+
+		return route(RequestPredicates.GET("/echorevert/{msg}").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
+				req -> ok().contentType(MediaType.TEXT_PLAIN)
+						.body(BodyInserters.fromObject(echoHandler.echoRevert(req.pathVariable("msg")))));
+	}
+
+	@Bean
+	public RouterFunction<ServerResponse> echoRevert2() {
+
+		return route(RequestPredicates.GET("/echorevert2/{msg}").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
+				req -> ok().contentType(MediaType.TEXT_PLAIN)
+						.body(BodyInserters.fromObject(echoHandler.echoRevert2(req.pathVariable("msg")))));
+	}
 }
