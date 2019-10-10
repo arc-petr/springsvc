@@ -21,7 +21,6 @@ deploy:
       - k8s/springsvc.yaml
 # optional profile to run the jib build on Google Cloud Build
 profiles:
-  -
   - name: debug-rest-pod
     build:
       artifacts:
@@ -47,7 +46,7 @@ profiles:
   - name: debug-rest-deployment
     build:
       artifacts:
-        - image: gcr.io/fresh-catwalk-240714/rest-service
+        - image: fresh-catwalk-240714/rest-service
           jib:
             project: service
             args:
@@ -56,6 +55,20 @@ profiles:
         sha256: {}
       local:
         push: false
+    deploy:
+      kubectl:
+        manifests:
+          - k8s/restdeploy.yaml
+  - name: debug-rest-deployment-remote
+    build:
+      artifacts:
+        - image: gcr.io/fresh-catwalk-240714/rest-service
+          jib:
+            project: service
+            args:
+              - '-DskipTests=true'
+      tagPolicy:
+        sha256: {}
     deploy:
       kubectl:
         manifests:
