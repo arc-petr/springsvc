@@ -39,7 +39,7 @@ spec:
         app: reactive-service
     spec:
       containers:
-        - name: rest-service
+        - name: reactive-service
           image: gcr.io/fresh-catwalk-240714/reactive-service
           ports:
             - containerPort: 8084

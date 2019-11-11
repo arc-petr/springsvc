@@ -23,6 +23,11 @@ public class EchoController {
 	@GetMapping(path = "/echorever/{msg}", produces = { MediaType.TEXT_PLAIN_VALUE })
 	@ResponseBody
 	public String getMessageReverse2(@PathVariable String msg) {
-		return new StringBuilder().append(msg).reverse().toString();
+		return new StringBuilder().append(msg).reverse().toString()+"Test5";
+	}
+	@GetMapping(path = "/echorever3/{msg}", produces = { MediaType.TEXT_PLAIN_VALUE })
+	@ResponseBody
+	public String getMessageReverse3(@PathVariable String msg) {
+		return new StringBuilder().append(msg).reverse().toString()+"Test5";
 	}
 }

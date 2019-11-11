@@ -46,13 +46,13 @@ profiles:
   - name: debug-rest-deployment
     build:
       artifacts:
-        - image: fresh-catwalk-240714/rest-service
+        - image: gcr.io/fresh-catwalk-240714/rest-service
           jib:
             project: service
             args:
               - '-DskipTests=true'
       tagPolicy:
-        sha256: {}
+        dateTime: {}
       local:
         push: false
     deploy:
@@ -69,6 +69,20 @@ profiles:
               - '-DskipTests=true'
       tagPolicy:
         sha256: {}
+    deploy:
+      kubectl:
+        manifests:
+          - k8s/restdeploy.yaml
+  - name: debug-rest-deployment-local
+    build:
+      artifacts:
+        - image: rest-service
+          jib:
+            project: service
+            args:
+              - '-DskipTests=true'
+      tagPolicy:
+        dateTime: {}
     deploy:
       kubectl:
         manifests:

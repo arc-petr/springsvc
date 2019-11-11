@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>[${service.name}]%-30([%d][%t])[%-5level]%-30([%class{0}.%method:%L])
+                %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <property name="service.name" value="r4e-acommon"/>
+    <logger name='com.reputation' level='DEBUG'/>
+
+    <root>
+        <level value="DEBUG" />
+        <appender-ref ref='STDOUT' />
+    </root>
+
+    <springProfile name="(dev | qa) &amp; aws">
+        <logger name='com.reputation' level='WARN'/>
+
+        <root>
+            <level value="WARN" />
+            <appender-ref ref='STDOUT' />
+        </root>
+    </springProfile>
+    <springProfile name="aws &amp; e2e">
+        <logger name='com.reputation' level='INFO'/>
+        <root>
+            <level value="INFO" />
+            <appender-ref ref='STDOUT' />
+        </root>
+    </springProfile>
+    <springProfile name="aws &amp; prod &amp; eu">
+        <logger name='com.reputation' level='ERROR'/>
+        <root>
+            <level value="ERROR" />
+            <appender-ref ref='STDOUT' />
+        </root>
+    </springProfile>
+</configuration>

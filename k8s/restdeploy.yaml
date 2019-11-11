@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rest-service
-          image: gcr.io/fresh-catwalk-240714/rest-service
+          image: docker-registry.jx.192.168.64.31.nip.io/fresh-catwalk-240714/rest-service
           ports:
             - containerPort: 8085
           env:
